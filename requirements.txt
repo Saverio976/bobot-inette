@@ -1,5 +1,7 @@
 vosk
 sounddevice
+SpeechRecognition
+pyaudio
 pyautogui
 pywebview
 yt-dlp
