@@ -7,10 +7,12 @@ import json
 
 from src.plugins.open_app import plug_open
 from src.plugins.play_music import plug_music
+from src.plugins.change_window import plug_change_window
 
 funcs_exe_plug = [
     plug_open,
-    plug_music
+    plug_music,
+    plug_change_window
 ]
 
 q = queue.Queue()

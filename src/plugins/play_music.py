@@ -27,7 +27,7 @@ def open_music() -> bool:
         root.geometry("800x450")
         root.title(name)
         webbrowser.open_new(link)
-    exit(0)
+        exit(0)
 
 def plug_music(text: str):
     splits = text.split()
