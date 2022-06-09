@@ -1,0 +1,6 @@
+vosk
+sounddevice
+pyautogui
+pywebview
+yt-dlp
+youtube-search-python
