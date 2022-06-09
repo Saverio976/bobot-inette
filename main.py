@@ -1,9 +1,9 @@
 #!/bin/env python3
 import sys
-import sounddevice
-import vosk
-import queue
-import json
+import argparse
+
+from src import use_vosk
+from src import use_speech_recognition
 
 from src.plugins.open_app import plug_open
 from src.plugins.play_music import plug_music
@@ -14,50 +14,68 @@ funcs_exe_plug = [
     plug_music,
     plug_change_window
 ]
-
-q = queue.Queue()
-
-device_index = sounddevice.default.device
-device = sounddevice.query_devices(device=device_index[0], kind='input')
-samplerate = int(device['default_samplerate'])
-blocksize = 8000
-
-if len(sys.argv) == 1:
-    lang = input("fr or en lang ? [en/fr] > ")
-    if lang not in ("fr", "en"):
-        print("choose fr or en")
-        exit(1)
-elif sys.argv[1] not in ("fr", "en"):
-    print("choose fr or en")
-    exit(1)
-else:
-    lang = sys.argv[1]
-dict_choice = {
+dict_choice_lang = {
     "fr": "fr",
     "en": "en-us"
 }
-model = vosk.Model(lang=dict_choice[lang])
+dict_choice_engine = {
+    "vosk": use_vosk.main,
+    "speechrecognition": use_speech_recognition.main
+}
 
-def callback(indata, frames, time, status):
-    """This is called (from a separate thread) for each audio block."""
-    if status:
-        print(status, file=sys.stderr)
-    q.put(bytes(indata))
+in_list = False
+if "--list-engine" in sys.argv:
+    for e in dict_choice_engine.keys():
+        print(e)
+    in_list = True
+if "--list-lang" in sys.argv:
+    for e in dict_choice_lang.keys():
+        print(e)
+    in_list = True
+if in_list:
+    exit(0)
 
-with sounddevice.RawInputStream(
-        samplerate=samplerate,
-        blocksize=blocksize,
-        device=device_index[0],
-        dtype='int16',
-        channels=1,
-        callback=callback):
-    print("start recording and understanding")
-    rec = vosk.KaldiRecognizer(model, samplerate)
-    while True:
-        data = q.get()
-        if rec.AcceptWaveform(data=data):
-            res = json.loads(rec.Result())
-            print(res)
-            print(type(res))
-            for func in funcs_exe_plug:
-                func(res["text"])
+parser = argparse.ArgumentParser(description='tool to recognize default action by speech')
+parser.add_argument(
+    "--list-lang",
+    action="store_const",
+    const=True,
+    default=False,
+    help="get list of availible lang"
+)
+parser.add_argument(
+    "--list-engine",
+    action="store_const",
+    const=True,
+    default=False,
+    help="get list of availible engine"
+)
+parser.add_argument(
+    "--lang",
+    dest="lang",
+    type=str,
+    nargs=1,
+    required=False,
+    default=["en"],
+    help="specify the language"
+)
+parser.add_argument(
+    "--engine",
+    dest="engine",
+    type=str,
+    nargs=1,
+    required=False,
+    default=["vosk"],
+    help="specify the speech recognition engine"
+)
+
+res = parser.parse_args()
+if res.lang[0] not in dict_choice_lang:
+    print(f"{res.lang[0]} not availible (see --list-lang)", file=sys.stderr)
+    exit(1)
+lang = dict_choice_lang[res.lang[0]]
+if res.engine[0] not in dict_choice_engine:
+    print(f"{res.engine[0]} not availible (see --list-engine)")
+    exit(1)
+engine = dict_choice_engine[res.engine[0]]
+engine(lang=lang, funcs_exe_plug=funcs_exe_plug)
