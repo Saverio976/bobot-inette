@@ -4,3 +4,4 @@ pyautogui
 pywebview
 yt-dlp
 youtube-search-python
+python-libxdo-ng
