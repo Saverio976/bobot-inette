@@ -20,10 +20,16 @@ device = sounddevice.query_devices(device=device_index[0], kind='input')
 samplerate = int(device['default_samplerate'])
 blocksize = 8000
 
-lang = input("fr or en lang ? [en/fr] > ")
-if lang not in ("fr", "en"):
+if len(sys.argv) == 1:
+    lang = input("fr or en lang ? [en/fr] > ")
+    if lang not in ("fr", "en"):
+        print("choose fr or en")
+        exit(1)
+elif sys.argv[1] not in ("fr", "en"):
     print("choose fr or en")
     exit(1)
+else:
+    lang = sys.argv[1]
 dict_choice = {
     "fr": "fr",
     "en": "en-us"
