@@ -17,7 +17,7 @@ python3 -m pip install -r requirements.txt
 
 ## start
 
-python3 main.py
+python3 main.py [en | fr]
 
 ## what can you do
 
