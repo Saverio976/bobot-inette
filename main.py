@@ -12,8 +12,6 @@ funcs_exe_plug = [
     plug_music
 ]
 
-plug_music('joue')
-
 q = queue.Queue()
 
 device_index = sounddevice.default.device
@@ -21,8 +19,15 @@ device = sounddevice.query_devices(device=device_index[0], kind='input')
 samplerate = int(device['default_samplerate'])
 blocksize = 8000
 
-model = vosk.Model(lang='fr')
-# model = vosk.Model(lang='en-us')
+lang = input("fr or en lang ? [en/fr] > ")
+if lang not in ("fr", "en"):
+    print("choose fr or en")
+    exit(1)
+dict_choice = {
+    "fr": "fr",
+    "en": "en-us"
+}
+model = vosk.Model(lang=dict_choice[lang])
 
 def callback(indata, frames, time, status):
     """This is called (from a separate thread) for each audio block."""
