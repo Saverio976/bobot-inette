@@ -1,6 +1,7 @@
 echo "install source file to /opt"
 
 cd /opt/
+sudo rm -rf botbot-inette
 sudo git clone "https://github.com/Saverio976/bobot-inette.git" botbot-inette
 cd botbot-inette
 
