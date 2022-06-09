@@ -1,0 +1,8 @@
+[Unit]
+Description=the botbot-inette service to always have botbot-inette in the background
+
+[Service]
+Type=simple
+ExecStart=/opt/botbot-inette/main.py
+
+[Install]
