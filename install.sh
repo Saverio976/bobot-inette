@@ -9,11 +9,7 @@ echo "Do you want to do it ? [y/n] > "
 read CHOICE
 
 if [[ "$CHOICE" == "y" ]]; then
-    mkdir $HOME/.config/ -p
-    mkdir $HOME/.config/systemd/ -p
-    mkdir $HOME/.config/systemd/user/ -p
-
-    mv ./botbot-inette.service $HOME/.config/systemd/user/
+    sudo cp ./botbot-inette.service /etc/systemd/system/
 
     systemctl enable --now botbot-inette.service
 fi
