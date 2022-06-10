@@ -13,6 +13,17 @@ def callback(indata, frames, time, status):
         print(status, file=sys.stderr)
     q.put(bytes(indata))
 
+def undertand_res(data, rec: vosk.KaldiRecognizer, funcs_exe_plug: list):
+    if not rec.AcceptWaveform(data=data):
+        res = rec.PartialResult()
+        res = json.loads(res)
+        if res["partial"].strip() != "":
+            print(f"partial result : '{res['partial']}'")
+    else:
+        res = json.loads(rec.Result())
+        for func in funcs_exe_plug:
+            func(res["text"])
+
 def main(lang: str, funcs_exe_plug: list) -> int:
     global q
     device_index = sounddevice.default.device
@@ -32,9 +43,5 @@ def main(lang: str, funcs_exe_plug: list) -> int:
         print("start recording and understanding")
         while True:
             data = q.get()
-            if not rec.AcceptWaveform(data=data):
-                continue
-            res = json.loads(rec.Result())
-            for func in funcs_exe_plug:
-                func(res["text"])
+            undertand_res(data, rec, funcs_exe_plug)
     return 0
