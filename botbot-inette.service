@@ -3,7 +3,7 @@ Description=the botbot-inette service to always have botbot-inette in the backgr
 
 [Service]
 Type=simple
-ExecStart=/opt/botbot-inette/main.py en
+ExecStart=/opt/botbot-inette/main.py
 
 [Install]
 WantedBy=multi-user.target
