@@ -1,5 +1,11 @@
 #!/bin/env python3
 import sys
+import os
+
+file_path = os.path.realpath(__file__)
+path = os.path.dirname(file_path)
+os.chdir(path)
+
 import argparse
 
 from src import use_vosk
