@@ -1,4 +1,3 @@
-import os
 import pyautogui
 from xdo import Xdo
 
