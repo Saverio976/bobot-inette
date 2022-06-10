@@ -2,6 +2,27 @@
 
 ## requirements
 
+### use the installation script
+
+```bash
+git clone https://github.com/Saverio976/bobot-inette.git botbot-inette
+cd botbot-inette
+./install.sh
+```
+
+or
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Saverio976/bobot-inette/main/install.sh)"
+```
+
+### manualy
+
+```
+git clone https://github.com/Saverio976/bobot-inette.git botbot-inette
+cd botbot-inette
+```
+
 1. you need to install tkinter if you are on linux
 
 - arch: pacman -S tk
