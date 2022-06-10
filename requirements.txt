@@ -1,9 +1,21 @@
+# vosk usage
 vosk
+# use microphone (for vosk)
 sounddevice
+# SpeechRecognition usage
 SpeechRecognition
+# use microphone (for SpeechRecognition)
 pyaudio
+# tkinter wraper to ask some input
 pyautogui
+# open browser for music
 pywebview
+# youtube info
 yt-dlp
+# search for music
 youtube-search-python
+# control workspace/desktop
 python-libxdo-ng
+# text-to-speech
+gTTS
+miniaudio
