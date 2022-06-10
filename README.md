@@ -41,6 +41,11 @@ python3 -m pip install -r requirements.txt
 - arch: pacman -S portaudio
 - debian: apt install portaudio
 
+4. install ffmpeg
+
+- arch: pacman -S ffmpeg
+- debian: pacman -S ffmpeg
+
 ## start
 
 python3 main.py -h

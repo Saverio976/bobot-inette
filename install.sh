@@ -13,10 +13,12 @@ if command -v apt &>/dev/null
 then
     sudo apt install python-tk
     sudo apt install portaudio
+    sudo apt install ffmpeg
 elif command -v pacman &>/dev/null
 then
     sudo pacman -S tk
     sudo pacman -S portaudio
+    sudo pacman -S ffmpeg
 fi
 
 echo ""
