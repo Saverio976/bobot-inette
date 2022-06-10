@@ -26,7 +26,7 @@ echo "You can put botbot-inette to systemd service"
 echo "Do you want to do it ? [y/n] > "
 read CHOICE
 if [[ "$CHOICE" == "y" ]]; then
-    sudo cp ./botbot-inette.service /etc/systemd/system/
+    sudo cp ./botbot-inette.service /usr/lib/systemd/user/
 
-    systemctl enable --now botbot-inette.service
+    systemctl --user enable --now botbot-inette.service
 fi
