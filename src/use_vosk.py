@@ -3,10 +3,11 @@ import queue
 import json
 import sounddevice
 import vosk
+from .text_to_speech import say
 
 q = queue.Queue()
 
-def callback(indata, frames, time, status):
+def callback(indata, _, times, status):
     global q
     """This is called (from a separate thread) for each audio block."""
     if status:
@@ -40,7 +41,7 @@ def main(lang: str, funcs_exe_plug: list) -> int:
             channels=1,
             callback=callback):
         rec = vosk.KaldiRecognizer(model, samplerate)
-        print("start recording and understanding")
+        say("start recording", "en")
         while True:
             data = q.get()
             undertand_res(data, rec, funcs_exe_plug)
