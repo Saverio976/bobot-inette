@@ -1,6 +1,4 @@
-import os
 import pyautogui
-import tkinter
 import webbrowser
 from youtubesearchpython import VideosSearch
 
@@ -17,13 +15,9 @@ def open_music() -> bool:
     if isinstance(result, str) or len(result['result']) == 0:
         return False
     link = result['result'][0]['link']
-    # name = result['result'][0]['title']
     print(link)
-    # root = tkinter.Tk()
-    # root.geometry("800x450")
-    # root.title(name)
     webbrowser.open_new(link)
-    # exit(0)
+    return True
 
 def plug_music(text: str):
     splits = text.split()
