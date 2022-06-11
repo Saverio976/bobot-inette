@@ -1,5 +1,6 @@
 import speech_recognition
 from .text_to_speech import say
+from .handle_text import handle_text_mic
 
 dict_conv = {
     "en-us": "en-US",
@@ -24,6 +25,5 @@ def main(lang: str, funcs_exe_plug: list) -> int:
             print("input not recognized")
             continue
         print(text)
-        for func in funcs_exe_plug:
-            func(text)
+        handle_text_mic(text, funcs_exe_plug)
     return 0

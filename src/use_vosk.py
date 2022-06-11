@@ -4,6 +4,7 @@ import json
 import sounddevice
 import vosk
 from .text_to_speech import say
+from .handle_text import handle_text_mic
 
 q = queue.Queue()
 
@@ -22,8 +23,7 @@ def undertand_res(data, rec: vosk.KaldiRecognizer, funcs_exe_plug: list):
             print(f"partial result : '{res['partial']}'")
     else:
         res = json.loads(rec.Result())
-        for func in funcs_exe_plug:
-            func(res["text"])
+        handle_text_mic(res["text"], funcs_exe_plug)
 
 def main(lang: str, funcs_exe_plug: list) -> int:
     global q
