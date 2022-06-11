@@ -22,10 +22,12 @@ dict_choice_engine = {
 from src.plugins.open_app import plug_open
 from src.plugins.play_music import plug_music
 from src.plugins.change_window import plug_change_window
+from src.plugins.quit_window import plug_quit_window
 funcs_exe_plug = [
     plug_open,
     plug_music,
-    plug_change_window
+    plug_change_window,
+    plug_quit_window
 ]
 
 # lang correspond
