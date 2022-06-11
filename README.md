@@ -56,14 +56,14 @@ or
 
 ## what can you do
 
-1. open
+1. open (en) / ouvre (fr)
 
 open a input box for you to specify which program you want to launch
 
-2. play
+2. play (en) / joue (fr)
 
 open a input box to ask for music name and open the first result in youtube
 
-3. go to
+3. go to (en) / va (fr)
 
 open a input box to ask what application you want to switch to
