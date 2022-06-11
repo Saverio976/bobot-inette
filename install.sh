@@ -14,11 +14,13 @@ then
     sudo apt install python-tk
     sudo apt install portaudio
     sudo apt install ffmpeg
+    sudo apt install xdotool
 elif command -v pacman &>/dev/null
 then
     sudo pacman -S tk
     sudo pacman -S portaudio
     sudo pacman -S ffmpeg
+    sudo pacman -S xdotool
 fi
 
 echo ""
