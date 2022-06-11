@@ -1,5 +1,10 @@
 # botbot-inette
 
+control you pc with the voice
+still work in progress
+
+this will run only on linux, with x11 x server (most disro use it)
+
 ## requirements
 
 ### use the installation script
@@ -23,28 +28,33 @@ git clone https://github.com/Saverio976/bobot-inette.git botbot-inette
 cd botbot-inette
 ```
 
-1. you need to install tkinter if you are on linux
+1. install tkinter
 
 - arch: pacman -S tk
 - debian: apt install python-tk
 
-2. install python pip packages
+2. install PortAudio
+
+- arch: pacman -S portaudio
+- debian: apt install portaudio
+
+3. install xdotool
+
+- arch: pacman -S xdotool
+- debian: apt install xdotool
+
+3. install ffmpeg
+
+- arch: pacman -S ffmpeg
+- debian: pacman -S ffmpeg
+
+2. install python packages dependences
 
 pip install -r requirements.txt
 
 or
 
 python3 -m pip install -r requirements.txt
-
-3. install PortAudio if you are on linux
-
-- arch: pacman -S portaudio
-- debian: apt install portaudio
-
-4. install ffmpeg
-
-- arch: pacman -S ffmpeg
-- debian: pacman -S ffmpeg
 
 ## start
 
@@ -67,3 +77,7 @@ open a input box to ask for music name and open the first result in youtube
 3. go to (en) / va (fr)
 
 open a input box to ask what application you want to switch to
+
+4. quit (en) / quitte (fr)
+
+open a confirm box to kill your old current application
