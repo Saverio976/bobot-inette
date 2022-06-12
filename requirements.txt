@@ -19,3 +19,6 @@ python-libxdo-ng
 # text-to-speech
 gTTS
 miniaudio
+# chatbot
+transformers
+torch
