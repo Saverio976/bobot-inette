@@ -81,3 +81,7 @@ open a input box to ask what application you want to switch to
 4. quit (en) / quitte (fr)
 
 open a confirm box to kill your old current application
+
+5. talk (en) / parle (fr)
+
+get a chatbot to talk to

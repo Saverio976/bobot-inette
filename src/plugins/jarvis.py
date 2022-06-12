@@ -3,7 +3,7 @@ import torch
 
 from ..text_to_speech import say
 
-ok_text = ["jarvis"]
+ok_text = ["talk", "parle"]
 
 class Jarvis:
     def __init__(self, model: str = "microsoft/DialoGPT-small"):
