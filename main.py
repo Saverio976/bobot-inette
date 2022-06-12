@@ -25,11 +25,13 @@ from src.plugins.open_app import plug_open
 from src.plugins.play_music import plug_music
 from src.plugins.change_window import plug_change_window
 from src.plugins.quit_window import plug_quit_window
+from src.plugins.jarvis import plug_jarvis
 funcs_exe_plug = [
     plug_open,
     plug_music,
     plug_change_window,
-    plug_quit_window
+    plug_quit_window,
+    plug_jarvis
 ]
 
 # lang correspond
@@ -94,7 +96,7 @@ def main() -> int:
     engine = engine_class(lang=lang, funcs_exe_plug=funcs_exe_plug)
     while True:
         sentence = engine.get_sentence()
-        handle_text_mic(sentence, funcs_exe_plug)
+        handle_text_mic(sentence, funcs_exe_plug, engine)
     engine.end()
     return 0
 
