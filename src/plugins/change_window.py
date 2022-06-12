@@ -20,7 +20,7 @@ def change_window() -> bool:
     x.set_current_desktop(cur_deskt)
     return False
 
-def plug_change_window(text: str):
+def plug_change_window(text: str, _):
     splits = text.split()
     if len(splits) == 0:
         return (False, False)

@@ -19,7 +19,7 @@ def open_music() -> bool:
     webbrowser.open_new(link)
     return True
 
-def plug_music(text: str):
+def plug_music(text: str, _):
     splits = text.split()
     if len(splits) == 0:
         return (False, False)

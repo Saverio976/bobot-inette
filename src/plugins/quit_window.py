@@ -16,7 +16,7 @@ def quit_window() -> bool:
     os.kill(pid, signal.SIGQUIT)
     return True
 
-def plug_quit_window(text: str):
+def plug_quit_window(text: str, _):
     splits = text.split()
     if len(splits) == 0:
         return (False, False)

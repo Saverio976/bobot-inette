@@ -32,7 +32,7 @@ def open_app() -> bool:
         os.execlp(app, app)
     exit(0)
 
-def plug_open(text: str):
+def plug_open(text: str, _):
     splits = text.split()
     if len(splits) == 0:
         return (False, False)
