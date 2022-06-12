@@ -7,7 +7,7 @@ ok_text = ["jarvis"]
 
 class Jarvis:
     def __init__(self, model: str = "microsoft/DialoGPT-small"):
-        say("Creation of me", "en")
+        say("Creation of me, this can take some time for the firs time", "en")
         self._model = AutoModelForCausalLM.from_pretrained(model)
         self._tokenizer = AutoTokenizer.from_pretrained(model)
         self._chat_history = None
