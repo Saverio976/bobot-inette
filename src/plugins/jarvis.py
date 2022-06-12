@@ -21,10 +21,19 @@ class Jarvis:
         message = self._tokenizer.decode(self._chat_history[:, bot_inp_ids.shape[-1]:][0], skip_special_tokens=True)
         say(message, "en")
 
-def bring_jarvis():
+def bring_jarvis(engine):
+    not_end = True
     jarvis = Jarvis("microsoft/DialoGPT-large")
+    say("say quit to stop talk to me", "en")
+    while not_end == True:
+        text: str = engine.get_sentence()
+        not_end = not text.endswith("quit")
+        if not_end == False:
+            continue
+        jarvis.generate_response(text)
+    say("Bye, see ya", "en")
 
-def plug_jarvis(text: str):
+def plug_jarvis(text: str, engine):
     splits = text.split()
     if len(splits) == 0:
         return (False, False)
@@ -34,6 +43,6 @@ def plug_jarvis(text: str):
             if tex.startswith(to_check):
                 xd_ok = True
         if xd_ok:
-            res = bring_jarvis()
+            res = bring_jarvis(engine)
             return (True, res)
     return (False, False)
