@@ -3,46 +3,51 @@ import queue
 import json
 import sounddevice
 import vosk
-from .text_to_speech import say
-from .handle_text import handle_text_mic
 
-q = queue.Queue()
+class EngineVosk:
+    def __init__(self, lang: str = "en", funcs_exe_plug: list = []):
+        self._lang = lang
+        self._funcs_exe_plug = funcs_exe_plug
+        self._q = queue.Queue()
+        self._device_index = sounddevice.default.device
+        self._device = sounddevice.query_devices(device=self._device_index[0], kind='input')
+        self._samplerate = int(self._device['default_samplerate'])
+        self._blocksize = 8000
+        self._model = vosk.Model(lang=lang)
 
-def callback(indata, _, times, status):
-    global q
-    """This is called (from a separate thread) for each audio block."""
-    if status:
-        print(status, file=sys.stderr)
-    q.put(bytes(indata))
+        self._rec = vosk.KaldiRecognizer(self._model, self._samplerate)
 
-def undertand_res(data, rec: vosk.KaldiRecognizer, funcs_exe_plug: list):
-    if not rec.AcceptWaveform(data=data):
-        res = rec.PartialResult()
-        res = json.loads(res)
-        if res["partial"].strip() != "":
-            print(f"partial result : '{res['partial']}'")
-    else:
-        res = json.loads(rec.Result())
-        handle_text_mic(res["text"], funcs_exe_plug)
+    def _callback(self, indata, _, times, status):
+        """This is called (from a separate thread) for each audio block."""
+        if status:
+            print(status, file=sys.stderr)
+        self._q.put(bytes(indata))
 
-def main(lang: str, funcs_exe_plug: list) -> int:
-    global q
-    device_index = sounddevice.default.device
-    device = sounddevice.query_devices(device=device_index[0], kind='input')
-    samplerate = int(device['default_samplerate'])
-    blocksize = 8000
-    model = vosk.Model(lang=lang)
+    def _undertand_res(self, data):
+        if not self._rec.AcceptWaveform(data=data):
+            res = self._rec.PartialResult()
+            res = json.loads(res)
+            if res["partial"].strip() != "":
+                print(f"partial result : '{res['partial']}'")
+            return ""
+        else:
+            res = json.loads(self._rec.Result())
+            print(f"text: {res['text']}")
+            return res["text"]
 
-    with sounddevice.RawInputStream(
-            samplerate=samplerate,
-            blocksize=blocksize,
-            device=device_index[0],
-            dtype='int16',
-            channels=1,
-            callback=callback):
-        rec = vosk.KaldiRecognizer(model, samplerate)
-        say("start recording", "en")
-        while True:
-            data = q.get()
-            undertand_res(data, rec, funcs_exe_plug)
-    return 0
+    def get_sentence(self) -> str:
+        with sounddevice.RawInputStream(
+                samplerate=self._samplerate,
+                blocksize=self._blocksize,
+                device=self._device_index[0],
+                dtype='int16',
+                channels=1,
+                callback=self._callback) as _:
+            data = self._q.get()
+            res = self._undertand_res(data)
+            if res != "":
+                return res
+        return ""
+
+    def end(self):
+        return None

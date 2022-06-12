@@ -3,6 +3,8 @@
 # change cwd to where the file here
 import sys
 import os
+
+from src.handle_text import handle_text_mic
 file_path = os.path.realpath(__file__)
 path = os.path.dirname(file_path)
 os.chdir(path)
@@ -14,8 +16,8 @@ import argparse
 from src import use_vosk
 from src import use_speech_recognition
 dict_choice_engine = {
-    "vosk": use_vosk.main,
-    "speechrecognition": use_speech_recognition.main
+    "vosk": use_vosk.EngineVosk,
+    "speechrecognition": use_speech_recognition.EngineSpeechRecognition
 }
 
 # plugins
@@ -77,21 +79,24 @@ def parse_args() -> argparse.Namespace:
         type=str, nargs=1, required=False, default=["vosk"],
         help="specify the speech recognition engine"
     )
-    res = parser.parse_args()
-    return res
+    args = parser.parse_args()
+    if args.lang[0] not in dict_choice_lang:
+        parser.error(f"{args.lang[0]} not availible (see --list-lang)")
+    if args.engine[0] not in dict_choice_engine:
+        parser.error(f"{args.engine[0]} not availible (see --list-engine)")
+    return args
 
 def main() -> int:
     quit_this_if_list()
     args = parse_args()
-    if args.lang[0] not in dict_choice_lang:
-        print(f"{args.lang[0]} not availible (see --list-lang)", file=sys.stderr)
-        exit(1)
     lang = dict_choice_lang[args.lang[0]]
-    if args.engine[0] not in dict_choice_engine:
-        print(f"{args.engine[0]} not availible (see --list-engine)")
-        exit(1)
-    engine = dict_choice_engine[args.engine[0]]
-    return engine(lang=lang, funcs_exe_plug=funcs_exe_plug)
+    engine_class = dict_choice_engine[args.engine[0]]
+    engine = engine_class(lang=lang, funcs_exe_plug=funcs_exe_plug)
+    while True:
+        sentence = engine.get_sentence()
+        handle_text_mic(sentence, funcs_exe_plug)
+    engine.end()
+    return 0
 
 if __name__ == "__main__":
     ret_code = main()
