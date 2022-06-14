@@ -13,11 +13,13 @@ os.chdir(path)
 import argparse
 
 # engine
-from src import use_vosk
-from src import use_speech_recognition
+from src.use_vosk import EngineVosk
+from src.use_speech_recognition import EngineSpeechRecognition
+from src.use_text_input import EngineTextInput
 dict_choice_engine = {
-    "vosk": use_vosk.EngineVosk,
-    "speechrecognition": use_speech_recognition.EngineSpeechRecognition
+    "vosk": EngineVosk,
+    "speechrecognition": EngineSpeechRecognition,
+    "text": EngineTextInput
 }
 
 # plugins
